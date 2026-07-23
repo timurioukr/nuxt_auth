@@ -6,6 +6,12 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n'
   ],
 
+  /* Register components by filename, not folder-prefixed name
+     (<AppNavigationMenu>, not <NavigationAppNavigationMenu>). */
+  components: [
+    { path: '~/components', pathPrefix: false }
+  ],
+
   devtools: {
     enabled: true
   },

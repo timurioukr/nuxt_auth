@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import LoginForm from '~/components/auth/LoginForm.vue'
-
 const { t } = useI18n()
 
 useSeoMeta({ title: () => t('login.title') })

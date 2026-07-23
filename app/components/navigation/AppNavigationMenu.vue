@@ -28,8 +28,6 @@ const logoutItems = computed<NavigationMenuItem[]>(() => [
   }
 ])
 
-/* Collapsed keeps w-full links but hides labels — without justify-center
-   the icon sits on the left edge of the active pill. */
 const collapsedLinkUi = computed(() => (
   collapsed ? { link: 'justify-center' } : undefined
 ))

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui'
-import ProfileDetailsCard from '~/components/profile/ProfileDetailsCard.vue'
 
 definePageMeta({ layout: 'authenticated' })
 

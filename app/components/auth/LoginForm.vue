@@ -2,7 +2,6 @@
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import { FetchError } from 'ofetch'
-import FormFieldError from '~/components/form/FormFieldError.vue'
 
 const { t } = useI18n()
 

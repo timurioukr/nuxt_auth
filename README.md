@@ -53,6 +53,16 @@ Quality gates (also run in CI): `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnp
 
 Not for SEO — the only public page is a login form. SSR is kept because it is the only mode where auth is correct end-to-end: global route middleware runs on the server for the initial request, so an unauthenticated hit on `/dashboard` is redirected before any protected markup renders, an authenticated user hitting `/` is bounced to `/dashboard` with zero flash, and a page reload delivers a fully rendered page instead of a "checking session" spinner. With `ssr: false`, middleware runs client-only, which means either a flash of the wrong page or a loading gate on every hard refresh.
 
+### Why not an SPA (`ssr: false`)?
+
+This is essentially a CRM-style app: every meaningful page sits behind auth, search engines never see it, so an SPA looks like the natural default. We still chose universal SSR, for three reasons:
+
+1. **SPA's main selling point is void here.** The usual argument for `ssr: false` is static hosting — no server to run. But our auth design (BFF with an httpOnly session cookie) requires a Nitro server runtime *anyway*: the token must never reach browser JavaScript, so some server has to hold the session endpoints. Since the server exists regardless, going SPA would give up SSR's benefits and get nothing back.
+2. **Auth correctness.** In an SPA the route guard can only run after the JS bundle loads, which forces a choice between two bad UX states: render protected markup optimistically (flash of a page the user may not be allowed to see) or gate every hard refresh behind a "checking session" spinner. With SSR the guard runs on the server for the initial request — the browser receives either the right page or a redirect, never an intermediate state.
+3. **CRM usage patterns favor SSR.** Users live in tools like this for hours and reload freely (F5, reopening pinned tabs, deep links from chats/emails into a specific record). Each of those is a hard request; SSR answers it with a fully rendered page, an SPA with a blank shell + loader.
+
+The trade-off — server CPU per request and no CDN-only hosting — is a cost we already committed to with the BFF. If parts of the app ever become static-friendly (docs, public status page), Nuxt's `routeRules` allow mixing modes per route without changing the architecture.
+
 ## Auth & security
 
 The DummyJSON access token never reaches browser JavaScript. Three small Nitro routes act as a **Backend for Frontend (BFF)** — a thin server layer between the browser and the upstream API (`server/api/auth/`):

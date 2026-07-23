@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import AppBrand from '~/components/AppBrand.vue'
-import AppNavigationMenu from '~/components/navigation/AppNavigationMenu.vue'
-
 const { t } = useI18n()
 const { logout } = useAuth()
 const toast = useToast()
@@ -12,16 +9,14 @@ const route = useRoute()
 const isCollapsed = useCookie<boolean>('sidebar-collapsed', { default: () => false })
 const isMobileMenuOpen = ref(false)
 const isLoggingOut = ref(false)
+const iconButtonUi = { leadingIcon: 'size-5 text-dimmed' }
 
-// Close the mobile drawer whenever navigation happens.
 watch(() => route.path, () => {
   isMobileMenuOpen.value = false
 })
 
 function toggleSidebar(event: MouseEvent) {
   isCollapsed.value = !isCollapsed.value
-  // Drop focus after a mouse click so the focus ring doesn't linger like a
-  // box; e.detail === 0 for keyboard activation, so keyboard users keep it.
   if (event.detail > 0) {
     (event.currentTarget as HTMLElement).blur()
   }
@@ -63,7 +58,7 @@ async function onLogout() {
           :icon="isCollapsed ? 'i-lucide-panel-left-open' : 'i-lucide-panel-left-close'"
           :aria-label="isCollapsed ? t('nav.expand') : t('nav.collapse')"
           :class="['cursor-pointer', { 'ms-auto': !isCollapsed }]"
-          :ui="{ leadingIcon: 'size-5 text-dimmed' }"
+          :ui="iconButtonUi"
           @click="toggleSidebar"
         />
       </div>
@@ -85,7 +80,7 @@ async function onLogout() {
           icon="i-lucide-menu"
           class="cursor-pointer"
           :aria-label="t('nav.openMenu')"
-          :ui="{ leadingIcon: 'size-5 text-dimmed' }"
+          :ui="iconButtonUi"
           @click="isMobileMenuOpen = true"
         />
         <AppBrand size="sm" />
@@ -114,7 +109,7 @@ async function onLogout() {
               icon="i-lucide-x"
               class="ms-auto cursor-pointer"
               :aria-label="t('nav.closeMenu')"
-              :ui="{ leadingIcon: 'size-5 text-dimmed' }"
+              :ui="iconButtonUi"
               @click="isMobileMenuOpen = false"
             />
           </div>

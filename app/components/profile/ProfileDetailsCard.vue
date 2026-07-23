@@ -25,6 +25,25 @@ const birthDate = computed(() => {
 const location = computed(() =>
   [profile.city, profile.country].filter(Boolean).join(', ')
 )
+
+const gender = computed(() =>
+  profile.gender.charAt(0).toUpperCase() + profile.gender.slice(1)
+)
+
+interface ProfileDetail {
+  key: string
+  icon: string
+  label: string
+  value: string
+}
+
+const details = computed<ProfileDetail[]>(() => [
+  { key: 'email', icon: 'i-lucide-mail', label: t('profile.email'), value: profile.email },
+  { key: 'phone', icon: 'i-lucide-phone', label: t('profile.phone'), value: profile.phone },
+  { key: 'birthDate', icon: 'i-lucide-cake', label: t('profile.birthDate'), value: birthDate.value },
+  { key: 'location', icon: 'i-lucide-map-pin', label: t('profile.location'), value: location.value },
+  { key: 'gender', icon: 'i-lucide-user', label: t('profile.gender'), value: gender.value }
+].filter(detail => Boolean(detail.value)))
 </script>
 
 <template>
@@ -46,73 +65,20 @@ const location = computed(() =>
     </div>
 
     <dl class="mt-6 space-y-4 text-sm">
-      <div class="flex items-center gap-3">
-        <UIcon
-          name="i-lucide-mail"
-          class="size-4 shrink-0 text-dimmed"
-        />
-        <dt class="sr-only">
-          {{ t('profile.email') }}
-        </dt>
-        <dd class="text-default">
-          {{ profile.email }}
-        </dd>
-      </div>
       <div
-        v-if="profile.phone"
+        v-for="detail in details"
+        :key="detail.key"
         class="flex items-center gap-3"
       >
         <UIcon
-          name="i-lucide-phone"
+          :name="detail.icon"
           class="size-4 shrink-0 text-dimmed"
         />
         <dt class="sr-only">
-          {{ t('profile.phone') }}
+          {{ detail.label }}
         </dt>
         <dd class="text-default">
-          {{ profile.phone }}
-        </dd>
-      </div>
-      <div
-        v-if="birthDate"
-        class="flex items-center gap-3"
-      >
-        <UIcon
-          name="i-lucide-cake"
-          class="size-4 shrink-0 text-dimmed"
-        />
-        <dt class="sr-only">
-          {{ t('profile.birthDate') }}
-        </dt>
-        <dd class="text-default">
-          {{ birthDate }}
-        </dd>
-      </div>
-      <div
-        v-if="location"
-        class="flex items-center gap-3"
-      >
-        <UIcon
-          name="i-lucide-map-pin"
-          class="size-4 shrink-0 text-dimmed"
-        />
-        <dt class="sr-only">
-          {{ t('profile.location') }}
-        </dt>
-        <dd class="text-default">
-          {{ location }}
-        </dd>
-      </div>
-      <div class="flex items-center gap-3">
-        <UIcon
-          name="i-lucide-user"
-          class="size-4 shrink-0 text-dimmed"
-        />
-        <dt class="sr-only">
-          {{ t('profile.gender') }}
-        </dt>
-        <dd class="text-default capitalize">
-          {{ profile.gender }}
+          {{ detail.value }}
         </dd>
       </div>
     </dl>
