@@ -1,13 +1,15 @@
 # Nuxt Auth App
 
-Auth-gated application built with **Nuxt 4** and **Nuxt UI**. Current state: initial scaffold (v0.1.0) — project foundation without an auth flow yet.
+Auth-gated **Nuxt 4** app with **Nuxt UI**: login form, BFF session (httpOnly cookie + DummyJSON), and route guards.
 
 ## Stack
 
 - [Nuxt 4](https://nuxt.com)
 - [Nuxt UI 4](https://ui.nuxt.com) + Tailwind CSS 4
 - TypeScript (strict)
-- [vee-validate](https://vee-validate.logaretm.com/) + [Zod](https://zod.dev) — form validation
+- [vee-validate](https://vee-validate.logaretm.com/) + [Zod](https://zod.dev)
+- [@nuxtjs/i18n](https://i18n.nuxtjs.org)
+- Vitest
 - ESLint (`@nuxt/eslint`)
 - pnpm
 
@@ -20,15 +22,12 @@ Auth-gated application built with **Nuxt 4** and **Nuxt UI**. Current state: ini
 
 ```bash
 pnpm install
-```
-
-## Development
-
-```bash
 pnpm dev
 ```
 
 Server: `http://localhost:3000`
+
+Demo credentials ([DummyJSON users](https://dummyjson.com/users)): `emilys` / `emilyspass`
 
 ## Scripts
 
@@ -36,20 +35,22 @@ Server: `http://localhost:3000`
 | --- | --- |
 | `pnpm dev` | Dev server |
 | `pnpm build` | Production build |
-| `pnpm preview` | Preview production build locally |
+| `pnpm preview` | Preview production build |
 | `pnpm lint` | ESLint |
 | `pnpm typecheck` | Type check |
+| `pnpm test` | Vitest |
 
 ## Structure
 
 ```
 app/
-  app.vue          # Root + SEO
-  app.config.ts    # Nuxt UI theme
-  assets/css/      # Global styles
-  pages/           # Routes
-public/            # Static assets
-nuxt.config.ts
+  pages/           # / login, /dashboard stub
+  composables/     # useAuth
+  middleware/      # auth.global
+  layouts/         # default
+server/api/auth/   # login, logout, me (BFF)
+shared/            # Zod schemas + types
+i18n/              # locales
 ```
 
 ## Changelog

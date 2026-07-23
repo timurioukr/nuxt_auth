@@ -1,0 +1,60 @@
+{
+  "app": {
+    "name": "Planet App",
+    "description": "Nuxt 4 authentication demo with Nuxt UI, Zod and VeeValidate"
+  },
+  "login": {
+    "title": "Sign in",
+    "username": "Username",
+    "usernamePlaceholder": "Enter username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "rememberMe": "Remember me",
+    "submit": "Login",
+    "errors": {
+      "invalidCredentials": "Invalid username or password",
+      "serviceUnavailable": "Sign-in is temporarily unavailable. Please try again later.",
+      "generic": "Something went wrong. Please try again."
+    },
+    "validation": {
+      "usernameRequired": "Username is required",
+      "usernameMin": "Username must be at least 3 characters",
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 6 characters"
+    }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "logout": "Logout",
+    "logoutFailed": "Could not log out. Please try again.",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome to the app"
+  },
+  "profile": {
+    "title": "Profile",
+    "loadFailedTitle": "Could not load your profile",
+    "loadFailedDescription": "Something went wrong while fetching your data.",
+    "tryAgain": "Try again",
+    "email": "Email",
+    "gender": "Gender",
+    "phone": "Phone",
+    "birthDate": "Date of birth",
+    "location": "Location"
+  },
+  "errorPage": {
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "The page you are looking for drifted off into space.",
+    "genericTitle": "Something went wrong",
+    "genericDescription": "An unexpected error occurred. Please try again.",
+    "backHome": "Back home"
+  }
+}

@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
-    '@nuxt/ui'
+    '@nuxt/ui',
+    '@nuxtjs/i18n'
   ],
 
   devtools: {
@@ -10,6 +11,19 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+
+  routeRules: {
+    '/**': {
+      headers: {
+        'Content-Security-Policy': 'base-uri \'self\'; frame-ancestors \'none\'; object-src \'none\'',
+        'Permissions-Policy': 'camera=(), geolocation=(), microphone=()',
+        'Referrer-Policy': 'no-referrer',
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY'
+      }
+    },
+    '/login': { redirect: '/' }
+  },
 
   compatibilityDate: '2026-07-23',
 
@@ -23,6 +37,17 @@ export default defineNuxtConfig({
         commaDangle: 'never',
         braceStyle: '1tbs'
       }
+    }
+  },
+
+  i18n: {
+    strategy: 'no_prefix',
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', name: 'English', file: 'en.json' }
+    ],
+    experimental: {
+      localeDetector: 'localeDetector.ts'
     }
   }
 })
