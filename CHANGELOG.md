@@ -1,3 +1,15 @@
+## [0.3.0] - 2026-07-23
+
+### Added
+
+- Authenticated shell: `/dashboard`, `/profile`, sidebar nav with logout, and custom 404/`error.vue`
+
+### Fixed
+
+- Map DummyJSON invalid-credentials `400` to app `401`
+- Show login API errors as field validation under password (no alert banner)
+- Center icons in the collapsed sidebar
+
 ## [0.2.0] - 2026-07-23
 
 ### Added

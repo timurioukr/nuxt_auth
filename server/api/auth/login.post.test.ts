@@ -69,6 +69,18 @@ describe('POST /api/auth/login', () => {
     expect(setCookie).not.toHaveBeenCalled()
   })
 
+  it('maps DummyJSON invalid-credentials 400 to 401', async () => {
+    const error = new FetchError('Bad Request')
+    Object.defineProperties(error, {
+      status: { value: 400 },
+      statusCode: { value: 400 }
+    })
+    upstreamError = error
+
+    await expect(handler({} as LoginEvent)).rejects.toMatchObject({ statusCode: 401 })
+    expect(setAuthCookie).not.toHaveBeenCalled()
+  })
+
   it('does not persist malformed upstream tokens', async () => {
     upstreamResult = { accessToken: '   ' }
 

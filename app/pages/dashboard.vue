@@ -1,4 +1,6 @@
 <script setup lang="ts">
+definePageMeta({ layout: 'authenticated' })
+
 const { t } = useI18n()
 
 useSeoMeta({ title: () => t('dashboard.title') })

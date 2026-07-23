@@ -1,6 +1,6 @@
 # Nuxt Auth App
 
-Auth-gated **Nuxt 4** app with **Nuxt UI**: login form, BFF session (httpOnly cookie + DummyJSON), and route guards.
+Auth-gated **Nuxt 4** app with **Nuxt UI**: login form, BFF session (httpOnly cookie + DummyJSON), protected `/dashboard` and `/profile`, and route guards.
 
 ## Stack
 
@@ -44,10 +44,12 @@ Demo credentials ([DummyJSON users](https://dummyjson.com/users)): `emilys` / `e
 
 ```
 app/
-  pages/           # / login, /dashboard stub
+  pages/           # /, /dashboard, /profile
+  components/      # navigation
   composables/     # useAuth
   middleware/      # auth.global
-  layouts/         # default
+  layouts/         # default, authenticated
+  error.vue        # 404 / generic errors
 server/api/auth/   # login, logout, me (BFF)
 shared/            # Zod schemas + types
 i18n/              # locales

@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "Planet App",
-    "description": "Nuxt 4 authentication demo with Nuxt UI, Zod and VeeValidate"
+    "name": "Nuxt Auth App",
+    "description": "Nuxt 4 authentication app with Nuxt UI, Zod and VeeValidate"
   },
   "login": {
     "title": "Sign in",

@@ -16,7 +16,8 @@ export default defineEventHandler(async (event) => {
     })
     response = dummyJsonLoginResponseSchema.parse(payload)
   } catch (error: unknown) {
-    if (error instanceof FetchError && error.status === 401) {
+    /* DummyJSON returns 400 for bad credentials (not 401). */
+    if (error instanceof FetchError && (error.status === 400 || error.status === 401)) {
       throw createError({ statusCode: 401, message: 'Invalid username or password' })
     }
     throw createError({ statusCode: 502, message: 'Sign-in is temporarily unavailable. Please try again later.' })

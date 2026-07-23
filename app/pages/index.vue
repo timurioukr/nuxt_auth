@@ -9,7 +9,7 @@ useSeoMeta({ title: () => t('login.title') })
 
 const { login } = useAuth()
 
-const { defineField, handleSubmit, errors, isSubmitting } = useForm({
+const { defineField, handleSubmit, errors, isSubmitting, setFieldError } = useForm({
   validationSchema: toTypedSchema(createLoginSchema(key => t(key))),
   initialValues: { rememberMe: false }
 })
@@ -23,27 +23,6 @@ const [password, passwordAttrs] = defineField('password', lazyEagerValidation)
 const [rememberMe, rememberMeAttrs] = defineField('rememberMe')
 
 const showPassword = ref(false)
-const formError = ref<string | null>(null)
-
-const AUTO_DISMISS_MS = 5000
-let dismissTimer: ReturnType<typeof setTimeout> | undefined
-
-function clearFormError() {
-  formError.value = null
-  clearTimeout(dismissTimer)
-}
-
-function setFormError(message: string) {
-  formError.value = message
-  clearTimeout(dismissTimer)
-  dismissTimer = setTimeout(() => {
-    formError.value = null
-  }, AUTO_DISMISS_MS)
-}
-
-watch([username, password], clearFormError)
-
-onBeforeUnmount(() => clearTimeout(dismissTimer))
 
 const fieldUi = { error: 'text-xs' }
 
@@ -62,13 +41,16 @@ function loginErrorMessage(error: unknown): string {
   return t('login.errors.generic')
 }
 
+function setCredentialErrors(message: string) {
+  setFieldError('password', message)
+}
+
 const onSubmit = handleSubmit(async (credentials) => {
-  clearFormError()
   try {
     await login(credentials)
     await navigateTo('/dashboard')
   } catch (error) {
-    setFormError(loginErrorMessage(error))
+    setCredentialErrors(loginErrorMessage(error))
   }
 })
 </script>
@@ -94,17 +76,6 @@ const onSubmit = handleSubmit(async (credentials) => {
         novalidate
         @submit="onSubmit"
       >
-        <Transition name="field-error">
-          <UAlert
-            v-if="formError"
-            color="error"
-            variant="subtle"
-            icon="i-lucide-circle-alert"
-            :description="formError"
-            role="alert"
-          />
-        </Transition>
-
         <UFormField
           :label="t('login.username')"
           name="username"
