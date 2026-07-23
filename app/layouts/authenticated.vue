@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AppBrand from '~/components/AppBrand.vue'
 import AppNavigationMenu from '~/components/navigation/AppNavigationMenu.vue'
 
 const { t } = useI18n()
@@ -30,6 +31,7 @@ async function onLogout() {
   isLoggingOut.value = true
   try {
     await logout()
+    await navigateTo('/')
   } catch {
     toast.add({
       title: t('nav.logoutFailed'),
@@ -53,14 +55,7 @@ async function onLogout() {
         class="flex items-center py-5"
         :class="isCollapsed ? 'flex-col gap-3 px-3' : 'gap-2.5 px-5'"
       >
-        <UIcon
-          name="i-lucide-earth"
-          class="size-7 shrink-0 text-primary"
-        />
-        <span
-          v-if="!isCollapsed"
-          class="truncate text-lg font-semibold text-highlighted"
-        >{{ t('app.name') }}</span>
+        <AppBrand :show-name="!isCollapsed" />
         <UButton
           color="neutral"
           variant="ghost"
@@ -93,11 +88,7 @@ async function onLogout() {
           :ui="{ leadingIcon: 'size-5 text-dimmed' }"
           @click="isMobileMenuOpen = true"
         />
-        <UIcon
-          name="i-lucide-earth"
-          class="size-6 shrink-0 text-primary"
-        />
-        <span class="text-base font-semibold text-highlighted">{{ t('app.name') }}</span>
+        <AppBrand size="sm" />
       </header>
 
       <main class="flex-1 p-4 sm:p-6 lg:p-10">
@@ -115,11 +106,7 @@ async function onLogout() {
       <template #content>
         <div class="flex h-full flex-col bg-white dark:bg-slate-900">
           <div class="flex items-center gap-2.5 px-5 py-5">
-            <UIcon
-              name="i-lucide-earth"
-              class="size-7 shrink-0 text-primary"
-            />
-            <span class="truncate text-lg font-semibold text-highlighted">{{ t('app.name') }}</span>
+            <AppBrand />
             <UButton
               color="neutral"
               variant="ghost"

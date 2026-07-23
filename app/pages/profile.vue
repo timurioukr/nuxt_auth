@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ButtonProps } from '@nuxt/ui'
 import ProfileDetailsCard from '~/components/profile/ProfileDetailsCard.vue'
 
 definePageMeta({ layout: 'authenticated' })
@@ -22,6 +23,13 @@ watchEffect(() => {
     navigateTo('/')
   }
 })
+
+const errorActions = computed<ButtonProps[]>(() => [{
+  label: t('profile.tryAgain'),
+  color: 'error',
+  variant: 'solid',
+  onClick: () => refresh()
+}])
 </script>
 
 <template>
@@ -51,12 +59,7 @@ watchEffect(() => {
       icon="i-lucide-circle-alert"
       :title="t('profile.loadFailedTitle')"
       :description="t('profile.loadFailedDescription')"
-      :actions="[{
-        label: t('profile.tryAgain'),
-        color: 'error',
-        variant: 'solid',
-        onClick: () => refresh()
-      }]"
+      :actions="errorActions"
     />
 
     <ProfileDetailsCard

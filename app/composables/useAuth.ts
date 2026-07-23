@@ -42,10 +42,10 @@ export function useAuth(): UseAuthReturn {
     authenticated.value = true
   }
 
+  /* State only — where to go after logout is the caller's concern. */
   async function logout(): Promise<void> {
     await $fetch('/api/auth/logout', { method: 'POST' })
     authenticated.value = false
-    await navigateTo('/')
   }
 
   function clearSession(): void {
