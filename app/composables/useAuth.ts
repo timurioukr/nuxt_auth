@@ -10,12 +10,21 @@ interface UseAuthReturn {
   clearSession: () => void
 }
 
+/*
+ * The session only tracks whether someone is authenticated — not who. User
+ * data (name, avatar, …) is read from /api/auth/me where it is actually
+ * rendered (the profile page), so there is no user object to keep in sync.
+ */
 export function useAuth(): UseAuthReturn {
   const authenticated = useState('auth:authenticated', () => false)
   const sessionChecked = useState('auth:session-checked', () => false)
 
   const isAuthenticated = computed(() => authenticated.value)
 
+  /* Validates the httpOnly-cookie session against the API. useRequestFetch
+     forwards the incoming request's cookies to /api routes during SSR — a
+     plain $fetch would silently drop them (nuxt/nuxt#27996). Call only from a
+     Nuxt context (route middleware, setup). */
   async function refreshSession(): Promise<void> {
     const requestFetch = useRequestFetch()
     try {

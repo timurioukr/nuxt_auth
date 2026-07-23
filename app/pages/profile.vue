@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import ProfileDetailsCard from '~/components/profile/ProfileDetailsCard.vue'
+
 definePageMeta({ layout: 'authenticated' })
 
 const { t } = useI18n()
@@ -28,14 +30,19 @@ watchEffect(() => {
       {{ t('profile.title') }}
     </h1>
 
-    <div
-      v-if="status === 'pending'"
-      class="space-y-4"
-    >
-      <USkeleton class="h-4 w-1/2" />
-      <USkeleton class="h-3 w-1/3" />
-      <USkeleton class="h-3 w-2/3" />
-    </div>
+    <UCard v-if="status === 'pending'">
+      <div class="flex items-center gap-4">
+        <USkeleton class="size-16 shrink-0 rounded-full" />
+        <div class="w-full space-y-2">
+          <USkeleton class="h-4 w-1/2" />
+          <USkeleton class="h-3 w-1/3" />
+        </div>
+      </div>
+      <div class="mt-6 space-y-3">
+        <USkeleton class="h-3 w-2/3" />
+        <USkeleton class="h-3 w-1/2" />
+      </div>
+    </UCard>
 
     <UAlert
       v-else-if="error"
@@ -52,11 +59,9 @@ watchEffect(() => {
       }]"
     />
 
-    <p
+    <ProfileDetailsCard
       v-else-if="profile"
-      class="text-muted"
-    >
-      {{ profile.firstName }} {{ profile.lastName }}
-    </p>
+      :profile="profile"
+    />
   </div>
 </template>

@@ -1,3 +1,10 @@
+## [0.4.0] - 2026-07-23
+
+### Added
+
+- Profile details card on `/profile` (avatar, contact, birth date, location)
+- App theme: Montserrat + custom green/slate palette
+
 ## [0.3.0] - 2026-07-23
 
 ### Added

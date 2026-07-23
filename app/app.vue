@@ -1,16 +1,21 @@
 <script setup lang="ts">
 useHead({
-  htmlAttrs: {
-    lang: 'en'
-  },
+  meta: [
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+  ],
   link: [
     { rel: 'icon', href: '/favicon.ico' }
-  ]
+  ],
+  htmlAttrs: {
+    lang: 'en'
+  }
 })
 
+const { t } = useI18n()
+
 useSeoMeta({
-  title: 'Nuxt Auth App',
-  description: 'Auth-gated Nuxt 4 application'
+  title: () => t('app.name'),
+  description: () => t('app.description')
 })
 </script>
 

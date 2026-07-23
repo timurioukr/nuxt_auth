@@ -5,6 +5,10 @@ export const AUTH_COOKIE_NAME = import.meta.dev ? 'auth_token' : '__Host-auth_to
 
 export const DUMMY_JSON_BASE = 'https://dummyjson.com'
 
+/* Two session lengths. Without "remember me" the cookie is a session
+   cookie (dies with the browser) and the token is short-lived. With it,
+   both the cookie and the DummyJSON token live for REMEMBER_TTL so they
+   expire together — DummyJSON honours expiresInMins up to at least this. */
 export const SESSION_TTL_MINUTES = 60
 export const REMEMBER_TTL_MINUTES = 60 * 24 * 7 // 7 days
 
@@ -27,6 +31,7 @@ export function sessionCookieOptions(
 ) {
   return {
     ...authCookieBaseOptions(isDevelopment),
+    // Persistent cookie when remembered; otherwise a session cookie (no maxAge).
     ...(rememberMe ? { maxAge: REMEMBER_TTL_MINUTES * 60 } : {})
   }
 }
@@ -49,6 +54,8 @@ export function setAuthResponseNoStore(event: AuthEvent): void {
   setResponseHeader(event, 'Cache-Control', 'no-store')
 }
 
+/* Validate the untrusted upstream payload before returning its whitelisted,
+   flattened profile fields to the client. */
 export function pickUserProfile(source: unknown): UserProfile {
   return dummyJsonUserProfileSchema.parse(source)
 }

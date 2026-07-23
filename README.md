@@ -45,11 +45,12 @@ Demo credentials ([DummyJSON users](https://dummyjson.com/users)): `emilys` / `e
 ```
 app/
   pages/           # /, /dashboard, /profile
-  components/      # navigation
+  components/      # navigation, profile card
   composables/     # useAuth
   middleware/      # auth.global
   layouts/         # default, authenticated
   error.vue        # 404 / generic errors
+  assets/css/      # theme (Montserrat, palette)
 server/api/auth/   # login, logout, me (BFF)
 shared/            # Zod schemas + types
 i18n/              # locales
